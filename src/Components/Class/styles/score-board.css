@@ -1,0 +1,19 @@
+#score-board {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.choice {
+  border: 2px solid black;
+  padding: 7px;
+  border-radius: 100px;
+  font-size: 15px;
+  margin: 0 5px;
+}
+
+#choices-left {
+  display: flex;
+}

@@ -1,0 +1,34 @@
+#game-board {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+#game-board h3 {
+  font-size: 30px;
+  line-height: 1px;
+}
+
+#fish-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#fish-container img {
+  max-height: 400px;
+  max-width: 80%;
+}
+
+#fish-guess-form {
+  display: flex;
+  flex-direction: column;
+}
+
+#fish-guess-form input {
+  margin-top: 10px;
+  font-size: 30px;
+}
