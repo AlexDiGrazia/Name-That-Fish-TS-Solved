@@ -1,17 +1,18 @@
-import { initialFishes } from "../../constants";
 import "./styles/final-score.css";
 
-const totalCount = initialFishes.length;
+type FinalScoreProps = {
+  score: { correct: number; inCorrect: number };
+  totalCount: number;
+};
 
 export const FunctionalFinalScore = ({
-  correctAnswer,
-}: {
-  correctAnswer: number;
-}) => (
+  score,
+  totalCount,
+}: FinalScoreProps) => (
   <div id="final-score">
     <h1>Your Final Score Was</h1>
     <div id="score">
-      <p>{correctAnswer}</p>
+      <p>{score.correct}</p>
       <hr />
       <p>{totalCount}</p>
     </div>

@@ -1,34 +1,28 @@
 import "./styles/game-board.css";
-import { initialFishes } from "../../constants";
 import { useState } from "react";
 
-type FunctionalGameBoardProps = {
+type GameBoardProps = {
   index: number;
   setIndex: (index: number) => void;
-  correctAnswer: number;
-  wrongAnswer: number;
-  setCorrectAnswer: (score: number) => void;
-  setWrongAnswer: (score: number) => void;
   score: { correct: number; inCorrect: number };
   setScore: (score: { correct: number; inCorrect: number }) => void;
+  currentFish: { name: string; url: string };
 };
 
 export function FunctionalGameBoard({
   index,
   setIndex,
-  correctAnswer,
-  wrongAnswer,
-  setCorrectAnswer,
-  setWrongAnswer,
   score,
   setScore,
-}: FunctionalGameBoardProps) {
+  currentFish,
+}: GameBoardProps) {
   const [userInput, setUserInput] = useState("");
-  const currentFish = initialFishes[index];
-  const params =
+
+  const { correct, inCorrect } = score;
+  const scoreParams =
     userInput.toLowerCase() === currentFish.name
-      ? { correct: score.correct + 1, inCorrect: score.inCorrect }
-      : { correct: score.correct, inCorrect: score.inCorrect + 1 };
+      ? { correct: correct + 1, inCorrect }
+      : { correct, inCorrect: inCorrect + 1 };
 
   return (
     <div id="game-board">
@@ -38,13 +32,10 @@ export function FunctionalGameBoard({
       <form
         id="fish-guess-form"
         onSubmit={(e) => {
-          console.log(typeof setScore);
           e.preventDefault();
-          userInput.toLowerCase() === currentFish.name
-            ? setCorrectAnswer(correctAnswer + 1)
-            : setWrongAnswer(wrongAnswer + 1);
-          index < 3 && setIndex(index + 1);
           setUserInput("");
+          setScore(scoreParams);
+          index < 3 && setIndex(index + 1);
         }}
       >
         <label htmlFor="fish-guess">What kind of fish is this?</label>

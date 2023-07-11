@@ -1,37 +1,33 @@
-import { FunctionalGameBoard } from "./FunctionalGameBoard";
 import { FunctionalScoreBoard } from "./FunctionalScoreBoard";
+import { FunctionalGameBoard } from "./FunctionalGameBoard";
 import { FunctionalFinalScore } from "./FunctionalFinalScore";
+import { initialFishes } from "../../constants";
 import { useState } from "react";
 
 export function FunctionalApp() {
   const [index, setIndex] = useState(0);
-  const [correctAnswer, setCorrectAnswer] = useState(0);
-  const [wrongAnswer, setWrongAnswer] = useState(0);
   const [score, setScore] = useState({ correct: 0, inCorrect: 0 });
 
-  const showGameDashboard = correctAnswer + wrongAnswer < 4;
+  const currentFish = initialFishes[index];
+  const answersLeft = initialFishes.map((obj) => obj.name).slice(index);
+  const totalCount = initialFishes.length;
+
+  const gameInProgress = score.correct + score.inCorrect < 4;
   return (
     <>
-      {showGameDashboard ? (
+      {gameInProgress ? (
         <>
-          <FunctionalScoreBoard
-            index={index}
-            correctAnswer={correctAnswer}
-            wrongAnswer={wrongAnswer}
-          />
+          <FunctionalScoreBoard score={score} answersLeft={answersLeft} />
           <FunctionalGameBoard
             index={index}
             setIndex={setIndex}
-            correctAnswer={correctAnswer}
-            wrongAnswer={wrongAnswer}
-            setCorrectAnswer={setCorrectAnswer}
-            setWrongAnswer={setWrongAnswer}
             score={score}
             setScore={setScore}
+            currentFish={currentFish}
           />
         </>
       ) : (
-        <FunctionalFinalScore correctAnswer={correctAnswer} />
+        <FunctionalFinalScore score={score} totalCount={totalCount} />
       )}
     </>
   );

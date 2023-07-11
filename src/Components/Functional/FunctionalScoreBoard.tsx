@@ -1,28 +1,22 @@
 import "./styles/score-board.css";
-const answersLeft = ["trout", "salmon", "tuna", "shark"];
 
-type FunctionalScoreBoardProps = {
-  index: number;
-  correctAnswer: number;
-  wrongAnswer: number;
+type ScoreBoardProps = {
+  score: { correct: number; inCorrect: number };
+  answersLeft: string[];
 };
 
-export function FunctionalScoreBoard({
-  index,
-  correctAnswer,
-  wrongAnswer,
-}: FunctionalScoreBoardProps) {
+export function FunctionalScoreBoard({ score, answersLeft }: ScoreBoardProps) {
   return (
     <div id="score-board">
-      <div>Incorrect 🔻: {wrongAnswer}</div>
+      <div>Incorrect 🔻: {score.inCorrect}</div>
       <div id="choices-left">
-        {answersLeft.slice(index).map((answer) => (
+        {answersLeft.map((answer) => (
           <div key={answer} className="choice">
             {answer}
           </div>
         ))}
       </div>
-      <div>Correct ✅: {correctAnswer}</div>
+      <div>Correct ✅: {score.correct}</div>
     </div>
   );
 }
