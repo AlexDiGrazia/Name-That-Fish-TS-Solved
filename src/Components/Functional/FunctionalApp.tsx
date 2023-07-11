@@ -11,18 +11,24 @@ export function FunctionalApp() {
   const currentFish = initialFishes[index];
   const answersLeft = initialFishes.map((obj) => obj.name).slice(index);
   const totalCount = initialFishes.length;
+  const gameInProgress = index !== 4;
 
-  const gameInProgress = score.correct + score.inCorrect < 4;
+  const handleAnswer = (fishName: string) => {
+    const valueToAdd = fishName === currentFish.name ? [1, 0] : [0, 1];
+    setScore({
+      correct: score.correct + valueToAdd[0],
+      inCorrect: score.inCorrect + valueToAdd[1],
+    });
+    setIndex(index + 1);
+  };
+
   return (
     <>
       {gameInProgress ? (
         <>
           <FunctionalScoreBoard score={score} answersLeft={answersLeft} />
           <FunctionalGameBoard
-            index={index}
-            setIndex={setIndex}
-            score={score}
-            setScore={setScore}
+            handleAnswer={handleAnswer}
             currentFish={currentFish}
           />
         </>
