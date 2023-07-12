@@ -6,27 +6,31 @@ import { initialFishes } from "../../constants";
 
 export class ClassApp extends Component {
   state = {
-    userInput: "",
     correct: 0,
     inCorrect: 0,
-    index: 0,
   };
 
-  handleState = (
-    userInput: string,
-    correct: number | undefined = this.state.correct,
-    inCorrect: number | undefined = this.state.inCorrect,
-    index: number | undefined = this.state.index
-  ) => this.setState({ userInput, correct, inCorrect, index });
+  handleUserInput = (userInput: string) => {
+    const keyToUpdate =
+      userInput.toLowerCase() ===
+      initialFishes[this.state.correct + this.state.inCorrect].name
+        ? "correct"
+        : "inCorrect";
+    this.setState((prev: { correct: number; inCorrect: number }) => ({
+      ...prev,
+      [keyToUpdate]: prev[keyToUpdate] + 1,
+    }));
+  };
 
   render() {
-    const { userInput, correct, inCorrect, index } = this.state;
+    const { correct, inCorrect } = this.state;
 
+    const index = correct + inCorrect;
     const currentFish = initialFishes[index];
     const answersLeft = initialFishes.map((obj) => obj.name).slice(index);
     const totalCount = initialFishes.length;
 
-    const gameInProgress = correct + inCorrect < 4;
+    const gameInProgress = index !== 4;
 
     return (
       <>
@@ -38,12 +42,8 @@ export class ClassApp extends Component {
               answersLeft={answersLeft}
             />
             <ClassGameBoard
-              index={index}
-              correct={correct}
-              inCorrect={inCorrect}
               currentFish={currentFish}
-              userInput={userInput}
-              handleState={this.handleState}
+              handleUserInput={this.handleUserInput}
             />
           </>
         ) : (
